@@ -1,5 +1,5 @@
 // declaring a function info 
-def info(message) {
+def info() {
     echo "Hai, I am function whose name is info"
 }
 
