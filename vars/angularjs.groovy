@@ -22,8 +22,8 @@ def call(COMPONENT) {
 
             stage('Code Quality Analysis') {
                 steps {   
-                                 
-                        // sh "echo Code Quality Analysis Is In Place"
+
+                        sh "echo Code Quality Analysis Is In Place"
                 }
             }
 
