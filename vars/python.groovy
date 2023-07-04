@@ -4,7 +4,6 @@ def lintChecks(){
         #pip3 install pylint
         #pylint *.py
         echo lint checks completed for ${COMPONENT}
-
     ''' 
 }
 
@@ -12,8 +11,11 @@ def lintChecks(){
 def call(COMPONENT) {
     pipeline {
         agent {  label 'WS' }
+        environment {
+            SONARCRED = credentials('SONARCRED') 
+            SONATURL  = "172.31.90.35"
+        }
         stages {      
-
             stage('Lint Checks') {
                 steps { 
                     script {
@@ -22,12 +24,20 @@ def call(COMPONENT) {
                 }
             }
 
-            stage('Code Compile') {
+            stage('Sonar Checks') {
                 steps {                
-                        sh "npm install"
+                        script {
+                            env.ARGS="-Dsonar.sources=."
+                            common.sonarChecks()
+                        }
+                    }
                 }
-            }
 
-        }                                                                             
+            stage('Testing') {
+                steps {                
+                        sh "echo Testing"
+                    }
+                }
+            }                                                                             
+        }
     }
-}
