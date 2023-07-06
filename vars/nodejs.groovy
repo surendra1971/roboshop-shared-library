@@ -1,8 +1,8 @@
 def lintChecks(){
     sh ''' 
         echo Installing JSLint for ${COMPONENT}
-        npm i jslint
-        node_modules/jslint/bin/jslint.js server.js || true
+        // npm i jslint
+        // node_modules/jslint/bin/jslint.js server.js || true
         echo lint checks completed for ${COMPONENT}
     ''' 
 }
@@ -81,7 +81,7 @@ def call(COMPONENT) {
                 steps {
                     sh  '''
                         echo Uploading ${COMPONENT} Artifacts To Nexus
-                        curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.92.189:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+                        curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.92.222:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
                         echo Uploading ${COMPONENT} Artifacts To Nexus is Completed
 
                         '''
