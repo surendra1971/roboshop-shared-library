@@ -12,9 +12,8 @@ def call(COMPONENT) {
     pipeline {
         agent {  label 'WS' }
         environment {
-            SONARCRED = credentials('SONARCRED')
-            NEXUS = credentials('NEXUS') 
-            SONARURL  = "172.31.90.35"
+            SONARCRED = credentials('SONARCRED') 
+            SONARURL  = "172.31.86.248"
         }
         stages {      
 
@@ -61,30 +60,6 @@ def call(COMPONENT) {
                             sh "echo Functional testing completed"
                         }
                     }
-                }
-            }
-
-            stage('Prepare Artifacts') {
-                when { expression { env.TAG_NAME != null } }
-                steps {
-                    sh '''
-                        echo Preparing Artifacts for ${COMPONENT}
-                        npm install
-                        zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
-                       
-                       '''
-                }
-            }
-
-            stage('Upload Artifacts') {
-                when { expression { env.TAG_NAME != null } }
-                steps {
-                    sh  '''
-                        echo Uploading ${COMPONENT} Artifacts To Nexus
-                        curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip  http://172.31.92.222:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
-                        echo Uploading ${COMPONENT} Artifacts To Nexus is Completed
-
-                        '''
                 }
             }
         }                                                                             
