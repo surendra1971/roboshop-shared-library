@@ -13,7 +13,7 @@ def call(COMPONENT) {
         agent {  label 'WS' }
         environment {
             SONARCRED = credentials('SONARCRED') 
-            SONARURL  = "172.31.90.35"
+            SONARURL  = "172.31.86.248"
         }
         stages {      
 
@@ -33,19 +33,35 @@ def call(COMPONENT) {
 
             stage('Sonar Checks') {
                 steps {
-                    script {      
-                        env.ARGS="-Dsonar.sources=."          
+                    script {
+                        env.ARGS="-Dsonar.sources=."              
                         common.sonarChecks()
                     }
                 }
             }
 
-            stage('Testing') {
-                steps {
-                    sh "echo Testing In Progress" 
+            stage('Test Cases') {
+                parallel {
+                    stage('Unit Testing') {
+                        steps {
+                            sh "echo Unit testing started"
+                            sh "echo Unit testing completed"
+                        }
+                    }
+                    stage('Integtation Testing') {
+                        steps {
+                            sh "echo Integtation testing started"
+                            sh "echo Integtation testing completed"
+                        }
+                    }
+                    stage('Functional Testing') {
+                        steps {
+                            sh "echo Functional testing started"
+                            sh "echo Functional testing completed"
+                        }
+                    }
                 }
             }
-
         }                                                                             
     }
 }
