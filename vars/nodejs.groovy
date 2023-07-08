@@ -1,13 +1,16 @@
-def lintChecks(){
-    sh ''' 
-        echo Installing JSLint for ${COMPONENT}
-        npm i jslint
-        node_modules/jslint/bin/jslint.js server.js || true
-        echo lint checks completed for ${COMPONENT}
-    ''' 
+def call(){
+    
+    node(){
+
+        common.lintChecks()
+    }
+    
 }
 
 
+
+
+/*
 def call(COMPONENT) {
     pipeline {
         agent {  label 'WS' }
@@ -63,9 +66,21 @@ def call(COMPONENT) {
                     }
                 }
             }
+            stage('Validate Artifact Version') {
+                when { expression { env.TAG_NAME != null } }
+                steps {
+                    script {
+                       env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://${NEXUSURL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true')
+                       print UPLOAD_STATUS
+                    }                    
+                }
+            }
 
             stage('Prepare Artifacts') {
-                when { expression { env.TAG_NAME != null } }
+                when { 
+                    expression { env.TAG_NAME != null }
+                    expression { env.UPLOAD_STATUS == "" }
+                 }
                 steps {
                     sh '''
                         echo Preparing Artifacts for ${COMPONENT}
@@ -90,3 +105,4 @@ def call(COMPONENT) {
         }                                                                             
     }
 }
+*/
