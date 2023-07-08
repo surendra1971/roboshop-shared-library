@@ -2,10 +2,12 @@
 def call(){
     
     node(){
-
+        env.APP_TYPE="angularjs"
         common.lintChecks()
         env.ARGS="-Dsonar.sources=."              
         common.sonarChecks()
+        common.testCases()
+
     }
     
 }

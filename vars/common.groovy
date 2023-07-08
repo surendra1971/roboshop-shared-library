@@ -42,3 +42,28 @@ def sonarChecks(){
         }
 }
 
+
+// This is how we can handle scripted pipeline for paralle stages
+// Ref: https://stackoverflow.com/questions/57485965/how-can-i-create-parallel-stages-in-jenkins-scripted-pipeline
+
+def testCases() {
+        stage('Test Cases') {
+                def stages = [:]
+
+                stages["Unit Testing"] = {
+                        echo "Unit Testing Started for ${COMPONENT}"
+                        echo "Unit Testing Completed for ${COMPONENT}"
+                }
+                stages["Integration Testing"] = {
+                        echo "Integration Testing Started for ${COMPONENT}"
+                        echo "Integration Testing Completed for ${COMPONENT}"
+                }
+                stages["Functional Testing"] = {
+                        echo "Functional Testing Started for ${COMPONENT}"
+                        echo "Functional Testing Completed for ${COMPONENT}"
+                }
+
+                parallel(stages)
+        }                        
+}
+
