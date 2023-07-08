@@ -1,3 +1,15 @@
+
+def call(){
+    
+    node(){
+
+        common.lintChecks()
+    }
+    
+}
+
+
+/*
 def lintChecks(){
     sh ''' 
         echo Installing AngularLint for ${COMPONENT}
@@ -30,3 +42,5 @@ def call(COMPONENT) {
         }                                                                             
     }
 }
+
+*/
