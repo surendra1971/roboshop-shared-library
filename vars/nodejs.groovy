@@ -1,6 +1,6 @@
 def call(){
     
-    node(){
+    node{
 
         common.lintChecks()
     }

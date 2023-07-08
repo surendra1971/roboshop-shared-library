@@ -3,7 +3,8 @@ def lintChecks(){
         if(env.APP_TYPE == "nodejs") {
         sh  ''' 
            echo Installing JSLint for ${COMPONENT}
-
+           npm i jslint  
+           node_modules/jslint/bin/jslint.js server.js || true
            echo lint checks completed for ${COMPONENT}        
            ''' 
         }
