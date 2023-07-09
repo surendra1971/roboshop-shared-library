@@ -8,6 +8,7 @@ def call(){
         common.testCases()
         if(env.TAG_NAME != null) {
             common.artifacts()
+        }
     }
     
 }
